@@ -10,8 +10,9 @@ function App() {
 
   return (
     <>
-
+    <BrowserRouter>
       <CurrentApp/>
+          </BrowserRouter>
 
     </>
   )
