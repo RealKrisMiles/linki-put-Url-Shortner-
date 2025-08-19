@@ -1,0 +1,95 @@
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import TextField from './TextField';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import api from '../api/api';
+import toast from 'react-hot-toast';
+
+const RegisterPage = () => {
+  const navigate = useNavigate();
+
+  const [loader, setloader] = useState(false)
+    const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues:{
+      username:"",
+      email:"",
+      password:"",
+    },
+    mode: 'onTouched',
+  });
+
+  const registerHandler= async(data)=>{
+    setloader(true);
+    try {
+    const {data: response}=  await api.post("/api/auth/public/register",data);
+      reset()
+    navigate("/login")
+    toast.success("Registration Successful")
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setloader(false)
+
+    }
+  }
+
+  const onSubmit = (data) => console.log(data)
+  return (
+    <div className='min-h-[calc(100vh-64px)] flex justify-center items-center'>
+        <form onSubmit={handleSubmit(registerHandler)} className='sm:w-[450px] w-[360px] shadow-2xl  py-8 sm:px-8 px-4 rounded-md'>
+          <h1 className='text-center font-serif text-blue-700 font-bold lg:text-3xl text-2xl '>
+            Register Here
+          </h1>
+          <hr className='mt-2 mb-5 text-black' />
+          <div className='flex flex-col gap-3'>
+            <TextField
+            label="Username"
+            required
+            id="username"
+            type="text"
+            message="Username is Required"
+            placeholder="Type your Username"
+            register={register}
+            errors={errors}
+            />
+            <TextField
+            label="Email"
+            required
+            id="email"
+            type="email"
+            message="Email is Required"
+            placeholder="Type your Email"
+            register={register}
+            errors={errors}
+            />
+            <TextField
+            label="Password"
+            required
+            id="password"
+            type="password"
+            message="Password is Required"
+            placeholder="Type your Password"
+            register={register}
+            min={6}
+            errors={errors}
+            />
+          </div>
+          <button disabled={loader} type='submit' className=' px-5 my-4  w-[60%] py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition duration-200 mx-auto block'>{loader?"loading":"Register"}</button>
+      
+        <p className='text-center text-sm text-slate-700 mt-6'>
+          Already have an account?
+          <Link className='font-semibold underline hover:text-black' to="/login"><span className='text-blue-700'>Login</span></Link>
+        </p>
+          </form>
+        </div>
+  )
+}
+
+export default RegisterPage
