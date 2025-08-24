@@ -17,8 +17,22 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
+const LandingPages = () => {
+  const navigate = useNavigate();
+  const { token } = useStoreContext();
+  console.log("TOKEN FROM LANDING PAGE: " + token);
 
+  const easterEggNavigateHandler = () => {
+    navigate("/easteregg"); 
+  };
 
+  const dashBoardNavigateHandler = () => {
+    if (token) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <motion.div

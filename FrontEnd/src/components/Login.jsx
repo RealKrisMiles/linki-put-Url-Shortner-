@@ -7,8 +7,44 @@ import toast from 'react-hot-toast';
 import { useStoreContext} from '../contextApi/ContextApi';
 
 const Login = () => {
+const navigator = useNavigate();
 
-
+  const [loader, setloader] = useState(false)
+  const {setToken}= useStoreContext();
+  
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({defaultValues:{
+    username:"",
+    password:"",
+  },
+  mode: 'onTouched',
+})
+const handleLogin=async(data)=>{
+      setloader(true);
+      try {
+       const {data:response}= await api.post("/api/auth/public/login",data)
+       console.log("1"+data)
+       console.log("2"+response)
+        // console.log(response)
+         localStorage.setItem("JWT_TOKEN",JSON.stringify(response.token))
+        reset()
+        //store the token in local storage
+     
+        setToken(response.token)    
+        toast.success("Login Successful!")
+        navigator("/dashboard")
+      } catch (error) {
+        console.log(error)
+        toast.error("Registration Failed!")
+      }finally{
+        setloader(false)
+      }
+}
   const onSubmit = (data) => console.log(data)
 
   return (

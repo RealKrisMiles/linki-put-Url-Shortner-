@@ -7,7 +7,11 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+<StrictMode>
+    <QueryClientProvider client={queryClient}>
+    <ContextProvider>
     <App />
+    </ContextProvider>
+    </QueryClientProvider>
   </StrictMode>,
 )

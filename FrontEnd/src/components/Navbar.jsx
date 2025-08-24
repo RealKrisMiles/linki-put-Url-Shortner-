@@ -7,7 +7,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useStoreContext } from '../contextApi/ContextApi';
 import Button from '@mui/material/Button';
 const Navbar = () => {
-
+  const navigate = useNavigate()
+  const {token,setToken} = useStoreContext()
+    const path = useLocation().pathname;
+    const [navbarOpen, setnavbarOpen] = useState(false)
+    const onLogOutHandler=()=>{
+        setToken(null)
+        localStorage.removeItem("JWT_TOKEN")
+        navigate("/login")
         
     }
   return (
