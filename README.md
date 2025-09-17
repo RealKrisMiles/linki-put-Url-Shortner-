@@ -34,7 +34,7 @@ Started cooking on **7th August 2025**, wrapped up with some polish on **23rd Au
 ### Backend setup
 
 1. Clone the repo (duh):
-   git clone https://github.com/RealKrisMiles/linki-put.git
+   git clone https://github.com/RealKrisMiles/linki-put.git](https://github.com/RealKrisMiles/linki-put-Url-Shortner-
 2. Set your DB deets in `application.properties` (MySQL/Postgres, your pick!)  
 3. Build & run:
      mvn clean install
